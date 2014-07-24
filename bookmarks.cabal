@@ -30,7 +30,9 @@ executable bookmarks
 
   -- Other library packages from which modules are imported.
   build-depends:
-    base >=4.6 && <4.7
+    acidstate >=0.12 && <0.13,
+    base >=4.6 && <4.7,
+    safecopy >=0.8 && <0.9
 
   -- Directories containing source files.
   -- hs-source-dirs:      
