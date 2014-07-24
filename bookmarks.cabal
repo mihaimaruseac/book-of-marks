@@ -33,6 +33,7 @@ executable bookmarks
   build-depends:
     acid-state >=0.12 && <0.13,
     base >=4.6 && <4.7,
+    bytestring >=0.10 && <0.11,
     safecopy >=0.8 && <0.9
 
   -- Directories containing source files.
