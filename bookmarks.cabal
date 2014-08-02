@@ -52,10 +52,9 @@ executable bookmarks-cli
 
 test-suite bookmarks-lib-test
   default-language:  Haskell2010
-  type:              detailed-0.9
-  test-module:       Test
+  type:              exitcode-stdio-1.0
+  main-is:           Main.hs
   hs-source-dirs:    test/lib
 
   build-depends:
-    base >=4.6 && <4.7,
-    Cabal >=1.20 && <1.21
+    base >=4.6 && <4.7
