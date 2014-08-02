@@ -5,3 +5,4 @@ install:
         - cabal build
 script:
         - dist/build/bookmarks-lib-test/bookmarks-lib-test #cabal test
+        - dist/build/bookmarks-lib-doctest/bookmarks-lib-doctest #cabal test
