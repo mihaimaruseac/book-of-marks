@@ -21,7 +21,7 @@ bug-reports:         https://github.com/mihaimaruseac/book-of-marks/issues
 cabal-version:       >=1.10
 tested-with:         GHC==7.6.3
 
-extra-source-files:
+extra-doc-files:
   README.md
 
 executable bookmarks
