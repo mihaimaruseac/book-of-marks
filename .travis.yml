@@ -4,4 +4,4 @@ install:
         - cabal configure
         - cabal build
 script:
-        - cabal test
+        - dist/build/bookmarks-lib-test/bookmarks-lib-test #cabal test
