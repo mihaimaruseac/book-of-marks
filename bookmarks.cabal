@@ -57,4 +57,8 @@ test-suite bookmarks-lib-test
   hs-source-dirs:    test/lib
 
   build-depends:
-    base >=4.6 && <4.7
+    base >=4.6 && <4.7,
+    tasty >=0.8 && <0.9,
+    tasty-hunit >=0.8 && <0.9,
+    tasty-quickcheck >=0.8 && <0.9,
+    tasty-smallcheck >=0.8 && <0.9
