@@ -14,10 +14,15 @@ copyright:           © 2014 Mihai Maruseac
 category:            Web
 build-type:          Simple
 
-extra-source-files:
-  README.md
+stability:           alpha (experimental)
+homepage:            https://github.com/mihaimaruseac/book-of-marks
+bug-reports:         https://github.com/mihaimaruseac/book-of-marks/issues
 
 cabal-version:       >=1.10
+tested-with:         GHC==7.6.3
+
+extra-source-files:
+  README.md
 
 executable bookmarks
   main-is:             Main.hs
