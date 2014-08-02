@@ -62,3 +62,14 @@ test-suite bookmarks-lib-test
     tasty-hunit >=0.8 && <0.9,
     tasty-quickcheck >=0.8 && <0.9,
     tasty-smallcheck >=0.8 && <0.9
+
+test-suite bookmarks-lib-doctest
+  default-language:  Haskell2010
+  type:              exitcode-stdio-1.0
+  main-is:           Main.hs
+  hs-source-dirs:    test/lib/doctest
+
+  build-depends:
+    base >=4.6 && <4.7,
+    doctest >=0.9 && <0.10,
+    Glob >= 0.7 && <0.8
