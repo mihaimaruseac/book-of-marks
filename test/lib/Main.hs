@@ -15,14 +15,14 @@ tests =
 
 smallCheckTests :: [TestTree]
 smallCheckTests =
-  [ testProperty "sort == sort . reverse" $ prop_sort
-  , testProperty "Fermat's last theorem" $ prop_fermat
+  [ testProperty "sort == sort . reverse" prop_sort
+  , testProperty "Fermat's last theorem" prop_fermat
   ]
 
 unitTests :: [TestTree]
 unitTests =
-  [ testCase "Lists of different length" $ case_diff_len
-  , testCase "Lists of same length" $ case_same_len
+  [ testCase "Lists of different length" case_diff_len
+  , testCase "Lists of same length" case_same_len
   ]
 
 prop_sort :: [Int] -> Bool

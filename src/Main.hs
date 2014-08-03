@@ -21,7 +21,7 @@ data Test = T URI [Tag] Description deriving (Show, Typeable)
 $(deriveSafeCopy 0 'base ''Test)
 
 writeTest :: Test -> Update Test ()
-writeTest t = put t
+writeTest = put
 
 queryTest :: Query Test Test
 queryTest = ask
