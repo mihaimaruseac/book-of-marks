@@ -10,4 +10,5 @@ module BookmarkManager.Types where
    >>> succ . last . take prev . iterate testDocTest $ 1
    42
  -}
+testDocTest :: Num a => a -> a
 testDocTest x = x + 1
