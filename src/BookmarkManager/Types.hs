@@ -82,7 +82,7 @@ buildBookmark u ti ta d = Right $ Bookmark u ti ta d
 --  >>> let prev = answer - 1
 --  >>> testDocTest prev
 --  42
---  >>> succ . last . take prev . iterate testDocTest $ 1
+--  >>> succ . Prelude.last . Prelude.take prev . iterate testDocTest $ 1
 --  42
 --
 testDocTest :: Num a => a -> a
