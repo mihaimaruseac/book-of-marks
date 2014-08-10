@@ -1,7 +1,7 @@
 module BookmarkManager.Types where
 
 {-|
-   Small test function to test the doctest support.
+Small test function to test the doctest support.
 
    >>> let answer = 42 :: Int
    >>> let prev = answer - 1
