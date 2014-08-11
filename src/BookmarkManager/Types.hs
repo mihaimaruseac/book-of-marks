@@ -13,21 +13,11 @@
 module BookmarkManager.Types
   (
     -- * Types
-    Bookmark
+    Bookmark(..)
   , URI
   , Title
   , Tag
   , Description
-  , ErrorReason
-
-    -- * Constructing a 'Bookmark'
-  , buildBookmark
-
-    -- * Extraction functions
-  , uri
-  , title
-  , tags
-  , descriptions
 
     -- * Extra
   , testDocTest
@@ -51,10 +41,6 @@ type Description = Text
 
 -- | Representation of a bookmark. Opaque to the user to allow some argument
 -- checking.
---
--- Construct it using 'buildBookmark'.
---
--- Deconstruct using 'uri', 'title', 'tags' and 'descriptions'.
 data Bookmark = Bookmark
   { uri :: URI                    -- ^ Get the URI of this bookmark.
   , title :: Title                -- ^ Get the title of this bookmark.
@@ -63,17 +49,6 @@ data Bookmark = Bookmark
   , descriptions :: [Description] -- ^ Extract the list of descriptions
                                   --   associated with the bookmark.
   }
-
--- | The error reason.
-type ErrorReason = Text
-
--- | The only way to build a bookmark
--- TODO: expand
--- TODO: implement
--- TODO: examples
-buildBookmark :: URI -> Title -> [Tag] -> [Description] ->
-  Either ErrorReason Bookmark
-buildBookmark u ti ta d = Right $ Bookmark u ti ta d
 
 -- |
 -- Small test function to test the doctest support.
