@@ -1,6 +1,5 @@
-# bookmarks
-
-[![Build Status](https://travis-ci.org/mihaimaruseac/book-of-marks.png)](https://travis-ci.org/mihaimaruseac/book-of-marks)
+bookmarks [![Build Status](https://travis-ci.org/mihaimaruseac/book-of-marks.png)](https://travis-ci.org/mihaimaruseac/book-of-marks)
+=========
 
 Small application for managing bookmarks.
 
