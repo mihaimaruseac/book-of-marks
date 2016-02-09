@@ -1,16 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
--- |
--- Module      : $Header$
--- Description : Short description
--- Copyright   : (c) Mihai Maruseac
--- License     : BSD3
--- Maintainer  : mihai.maruseac@gmail.com
--- Stability   : stable
--- Portability : POSIX
---
--- Basic Types used by the library.
-module BookmarkManager.Types
+-- | Example of a library file. It is also used for testing the test suites.
+module Lib
   (
     -- * Types
     Bookmark(..)
@@ -19,8 +10,8 @@ module BookmarkManager.Types
   , Tag
   , Description
 
-    -- * Extra
-  , testDocTest
+    -- * Extra, exported functions
+  , inc
   ) where
 
 import Data.Text
@@ -49,16 +40,20 @@ data Bookmark = Bookmark
   , descriptions :: [Description] -- ^ Extract the list of descriptions
                                   --   associated with the bookmark.
   }
-
--- |
--- Small test function to test the doctest support.
+-- | Increment one 'Num' value.
 --
 --  >>> let answer = 42 :: Int
 --  >>> let prev = answer - 1
---  >>> testDocTest prev
+--  >>> inc prev
 --  42
---  >>> succ . Prelude.last . Prelude.take prev . iterate testDocTest $ 1
+--  >>> succ . Prelude.last . Prelude.take prev . iterate inc $ 1
 --  42
 --
-testDocTest :: Num a => a -> a
-testDocTest x = x + 1
+--  Properties:
+--
+--  prop> succ x == inc x
+--  prop> inc (negate x) == negate (pred x)
+--
+inc :: Num a => a -- ^ value to increment
+             -> a -- ^ result
+inc x = x + 1

@@ -5,76 +5,73 @@ description:         Manager for the tons of bookmarks that I use. Will use a
                      database for them and a simple GUI/command line interface
                      to interact with those.
 
-license:             BSD3
+license:             ISC
 license-file:        LICENSE
 author:              Mihai Maruseac
 maintainer:          mihai.maruseac@gmail.com
-copyright:           © 2014 Mihai Maruseac
+copyright:           © 2016 Mihai Maruseac
+homepage:            http://github.com/mihaimaruseac/bookmarks
+bug-reports:         http://github.com/mihaimaruseac/bookmarks/issues
 
 category:            Web
 build-type:          Simple
-
 stability:           alpha (experimental)
-homepage:            https://github.com/mihaimaruseac/book-of-marks
-bug-reports:         https://github.com/mihaimaruseac/book-of-marks/issues
-
 cabal-version:       >=1.10
-tested-with:         GHC==7.6.3
 
-extra-doc-files:
+extra-source-files:
   README.md
+  stack.yaml
 
 source-repository head
-  type: git
+  type:     git
   location: git@github.com:mihaimaruseac/book-of-marks.git
 
 library
   default-language:  Haskell2010
   ghc-options:       -Wall -Werror -O2
   hs-source-dirs:    src
+  exposed-modules:   Lib
+  build-depends:     base >= 4.8 && < 5
+                   , text >= 1.2
 
-  exposed-modules:
-    BookmarkManager.Types
-
-  build-depends:
-    base >=4.6,
-    text >=1.1
-
-executable bookmarks-cli
+executable bookmarks-exe
   default-language:  Haskell2010
-  ghc-options:       -Wall -Werror -O2
+  ghc-options:       -Wall -Werror -O2 -Wall -threaded -rtsopts -with-rtsopts=-N
+  hs-source-dirs:    src-exe
   main-is:           Main.hs
-  hs-source-dirs:    executables/bookmarks-cli
+  build-depends:     base >= 4.8 && < 5
+                   , bookmarks
 
-  build-depends:
-    acid-state >=0.12,
-    base >=4.6,
-    bytestring >=0.10,
-    mtl >=2.2,
-    safecopy >=0.8
-
-test-suite bookmarks-lib-test
-  default-language:  Haskell2010
-  ghc-options:       -Wall -Werror -O2
+test-suite bookmarks-test
   type:              exitcode-stdio-1.0
-  main-is:           Main.hs
-  hs-source-dirs:    test/lib
-
-  build-depends:
-    base >=4.6,
-    tasty >=0.8,
-    tasty-hunit >=0.8,
-    tasty-quickcheck >=0.8,
-    tasty-smallcheck >=0.8
-
-test-suite bookmarks-lib-doctest
   default-language:  Haskell2010
-  ghc-options:       -Wall -Werror -O2
-  type:              exitcode-stdio-1.0
+  ghc-options:       -Wall -Werror -O2 -Wall -threaded -rtsopts -with-rtsopts=-N
+  hs-source-dirs:    src-test
   main-is:           Main.hs
-  hs-source-dirs:    test/lib/doctest
+  build-depends:     base >= 4.8 && < 5
+                   , tasty >= 0.11
+                   , tasty-hunit >= 0.9
+                   , tasty-smallcheck >= 0.8
+                   , bookmarks
 
-  build-depends:
-    base >=4.6,
-    doctest >=0.9,
-    Glob >= 0.7
+test-suite bookmarks-doctest
+  type:              exitcode-stdio-1.0
+  default-language:  Haskell2010
+  ghc-options:       -Wall -Werror -O2 -Wall -threaded -rtsopts -with-rtsopts=-N
+  hs-source-dirs:    src-doctest
+  main-is:           Main.hs
+  build-depends:     base >= 4.8 && < 5
+                   , doctest >=0.10
+                   , Glob >= 0.7
+                   , QuickCheck >= 2.5
+                   , bookmarks
+
+benchmark bookmarks-benchmark
+  type:              exitcode-stdio-1.0
+  default-language:  Haskell2010
+  ghc-options:       -Wall -Werror -O2 -Wall -threaded -rtsopts -with-rtsopts=-N
+  hs-source-dirs:    src-benchmark
+  main-is:           Main.hs
+  build-depends:     base >= 4.8 && < 5
+                   , criterion >= 1.1
+                   , bookmarks
