@@ -2,7 +2,7 @@ import Test.Tasty
 import Test.Tasty.HUnit
 import Test.Tasty.SmallCheck
 
-import Lib (inc)
+import BookmarkManager.Types (inc)
 
 main :: IO ()
 main = defaultMain $ testGroup "all-tests" tests

@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 -- | Example of a library file. It is also used for testing the test suites.
-module Lib
+module BookmarkManager.Types
   (
     -- * Types
     Bookmark(..)
