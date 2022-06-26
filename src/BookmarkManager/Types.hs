@@ -40,6 +40,7 @@ data Bookmark = Bookmark
   , descriptions :: [Description] -- ^ Extract the list of descriptions
                                   --   associated with the bookmark.
   }
+
 -- | Increment one 'Num' value.
 --
 --  >>> let answer = 42 :: Int
