@@ -47,25 +47,13 @@ jobs:
         id: setup-haskell-cabal
         uses: haskell/actions/setup@93635e8c4ac823f55cf3444537a63d3f2fd589de # v2.1.0
 
-      - name: List paths
-        run: |
-          # List all paths that should be cached?
-          echo "${{ steps.setup-haskell-cabal.outputs.cabal-store }}"
-          tree -alps "${{ steps.setup-haskell-cabal.outputs.cabal-store }}" || true
-          echo ~/.cabal
-          tree -alps ~/.cabal || true
-          echo ~/.cabal/store
-          tree -alps ~/.cabal/store || true
-          echo ~/.cabal/packages
-          tree -alps ~/.cabal/packages || true
-          echo dist-newstyle
-          tree -alps dist-newstyle || true
-
       - name: List everything (post toolchain)
         run: |
           #tree -alps .
           tree -alps . | sha256sum
           find . -type f | sort | xargs sha256sum | tee > post_toolchain
+          find ~/.cabal/store -type f | sort | xargs sha256sum | tee > post_toolchain_cabal_store
+          find dist-newstyle -type f | sort | xargs sha256sum | tee > post_toolchain_dist-newstyle
 
       - name: List Haskell binaries (post)
         run: |
@@ -92,6 +80,10 @@ jobs:
           tree -alps . | sha256sum
           find . -type f | sort | xargs sha256sum | tee > post_build
           diff -u post_toolchain post_build || true
+          find ~/.cabal/store -type f | sort | xargs sha256sum | tee > post_build_cabal_store
+          diff -u post_toolchain_cabal_store post_build_cabal_store || true
+          find dist-newstyle -type f | sort | xargs sha256sum | tee > post_build_dist-newstyle
+          diff -u post_toolchain_dist-newstyle post_build_dist-newstyle || true
 
       - name: Test code
         run: cabal test || true
@@ -102,6 +94,10 @@ jobs:
           tree -alps . | sha256sum
           find . -type f | sort | xargs sha256sum | tee > post_test
           diff -u post_build post_test || true
+          find ~/.cabal/store -type f | sort | xargs sha256sum | tee > post_test_cabal_store
+          diff -u post_build_cabal_store post_test_cabal_store || true
+          find dist-newstyle -type f | sort | xargs sha256sum | tee > post_test_dist-newstyle
+          diff -u post_build_dist-newstyle post_test_dist-newstyle || true
 
       - name: Benchmark code
         run: cabal bench || true
@@ -112,3 +108,7 @@ jobs:
           tree -alps . | sha256sum
           find . -type f | sort | xargs sha256sum | tee > post_bench
           diff -u post_test post_bench || true
+          find ~/.cabal/store -type f | sort | xargs sha256sum | tee > post_bench_cabal_store
+          diff -u post_test_cabal_store post_bench_cabal_store || true
+          find dist-newstyle -type f | sort | xargs sha256sum | tee > post_bench_dist-newstyle
+          diff -u post_test_dist-newstyle post_bench_dist-newstyle || true
