@@ -74,25 +74,25 @@ jobs:
         uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         with:
           path: dist-newstyle
-        key: dist-newstyle
+          key: dist-newstyle
 
       - name: Cache ~/.cabal/logs
         uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         with:
           path: ~/.cabal/logs
-        key: logs
+          key: logs
 
       - name: Cache ~/.cabal/packages
         uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         with:
           path: ~/.cabal/packages
-        key: packages
+          key: packages
 
       - name: Cache ~/.cabal/store
         uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         with:
           path: ~/.cabal/store
-        key: store
+          key: store
 
       - name: Build code
         run: cabal build
