@@ -1,17 +1,99 @@
-name: GitHub Actions Demo
-on: [push]
+name: Haskell CI with Cabal
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
+
+permissions: {}
+
 jobs:
-  Explore-GitHub-Actions:
+  test:
+    name: Test job
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
+      - name: "Checkout code"
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+        with:
+          persist-credentials: false
+
+      - name: Remove .git
+        run: rm -rf .git
+
+      - name: List everything (pre)
         run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+          tree -alps .
+          tree -alps . | sha256sum
+
+      - name: List Haskell binaries (pre)
+        run: |
+          echo 'Cabal: '
+          which cabal || true
+          cabal --version || true
+          echo 'GHC{,i}: '
+          which ghc ghci || true
+          ghc --version || true
+          ghci --version || true
+          echo 'GHCup: '
+          which ghcup || true
+          ghcup --version || true
+          echo 'Stack: '
+          which stack || true
+          stack --version || true
+
+      - name: Setup Haskell Compiler (cabal)
+        uses: haskell/actions/setup@93635e8c4ac823f55cf3444537a63d3f2fd589de # v2.1.0
+
+      - name: List everything (post toolchain)
+        run: |
+          #tree -alps .
+          tree -alps . | sha256sum
+          find . -type f | sort | xargs sha256sum | tee > post_toolchain
+
+      - name: List Haskell binaries (post)
+        run: |
+          echo 'Cabal: '
+          which cabal || true
+          cabal --version || true
+          echo 'GHC{,i}: '
+          which ghc ghci || true
+          ghc --version || true
+          ghci --version || true
+          echo 'GHCup: '
+          which ghcup || true
+          ghcup --version || true
+          echo 'Stack: '
+          which stack || true
+          stack --version || true
+
+      - name: Build code
+        run: cabal build
+
+      - name: List everything (post build)
+        run: |
+          #tree -alps .
+          tree -alps . | sha256sum
+          find . -type f | sort | xargs sha256sum | tee > post_build
+          diff -u post_toolchain post_build || true
+
+      - name: Test code
+        run: cabal test
+
+      - name: List everything (post test)
+        run: |
+          #tree -alps .
+          tree -alps . | sha256sum
+          find . -type f | sort | xargs sha256sum | tee > post_test
+          diff -u post_build post_test || true
+
+      - name: Benchmark code
+        run: cabal bench || true
+
+      - name: List everything (post bench)
+        run: |
+          #tree -alps .
+          tree -alps . | sha256sum
+          find . -type f | sort | xargs sha256sum | tee > post_bench
+          diff -u post_test post_bench || true
