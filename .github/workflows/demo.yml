@@ -46,6 +46,20 @@ jobs:
       - name: Setup Haskell Compiler (cabal)
         uses: haskell/actions/setup@93635e8c4ac823f55cf3444537a63d3f2fd589de # v2.1.0
 
+      - name: List paths
+        run: |
+          # List all paths that should be cached?
+          echo "${{ steps.setup-haskell-cabal.outputs.cabal-store }}"
+          tree -alps "${{ steps.setup-haskell-cabal.outputs.cabal-store }}"
+          echo ~/.cabal
+          tree -alps ~/.cabal
+          echo ~/.cabal/store
+          tree -alps ~/.cabal/store
+          echo ~/.cabal/packages
+          tree -alps ~/.cabal/packages
+          echo dist-newstyle
+          tree -alps dist-newstyle
+
       - name: List everything (post toolchain)
         run: |
           #tree -alps .
