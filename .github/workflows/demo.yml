@@ -53,7 +53,6 @@ jobs:
           tree -alps . | sha256sum
           find . -type f | sort | xargs sha256sum | tee > post_toolchain
           find ~/.cabal/store -type f | sort | xargs sha256sum | tee > post_toolchain_cabal_store
-          find dist-newstyle -type f | sort | xargs sha256sum | tee > post_toolchain_dist-newstyle
 
       - name: List Haskell binaries (post)
         run: |
@@ -82,8 +81,6 @@ jobs:
           diff -u post_toolchain post_build || true
           find ~/.cabal/store -type f | sort | xargs sha256sum | tee > post_build_cabal_store
           diff -u post_toolchain_cabal_store post_build_cabal_store || true
-          find dist-newstyle -type f | sort | xargs sha256sum | tee > post_build_dist-newstyle
-          diff -u post_toolchain_dist-newstyle post_build_dist-newstyle || true
 
       - name: Test code
         run: cabal test || true
@@ -96,8 +93,6 @@ jobs:
           diff -u post_build post_test || true
           find ~/.cabal/store -type f | sort | xargs sha256sum | tee > post_test_cabal_store
           diff -u post_build_cabal_store post_test_cabal_store || true
-          find dist-newstyle -type f | sort | xargs sha256sum | tee > post_test_dist-newstyle
-          diff -u post_build_dist-newstyle post_test_dist-newstyle || true
 
       - name: Benchmark code
         run: cabal bench || true
@@ -110,5 +105,3 @@ jobs:
           diff -u post_test post_bench || true
           find ~/.cabal/store -type f | sort | xargs sha256sum | tee > post_bench_cabal_store
           diff -u post_test_cabal_store post_bench_cabal_store || true
-          find dist-newstyle -type f | sort | xargs sha256sum | tee > post_bench_dist-newstyle
-          diff -u post_test_dist-newstyle post_bench_dist-newstyle || true
