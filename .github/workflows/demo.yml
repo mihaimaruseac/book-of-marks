@@ -49,7 +49,6 @@ jobs:
 
       - name: List everything (post toolchain)
         run: |
-          #tree -alps .
           tree -alps . | sha256sum
           find . -type f | sort | xargs sha256sum | tee > post_toolchain
           find ~/.cabal -type f | sort | xargs sha256sum | tee > post_toolchain_cabal
@@ -99,7 +98,6 @@ jobs:
 
       - name: List everything (post build)
         run: |
-          #tree -alps .
           tree -alps . | sha256sum
           find . -type f | sort | xargs sha256sum | tee > post_build
           diff -u post_toolchain post_build || true
@@ -111,7 +109,6 @@ jobs:
 
       - name: List everything (post test)
         run: |
-          #tree -alps .
           tree -alps . | sha256sum
           find . -type f | sort | xargs sha256sum | tee > post_test
           diff -u post_build post_test || true
@@ -123,7 +120,6 @@ jobs:
 
       - name: List everything (post bench)
         run: |
-          #tree -alps .
           tree -alps . | sha256sum
           find . -type f | sort | xargs sha256sum | tee > post_bench
           diff -u post_test post_bench || true
