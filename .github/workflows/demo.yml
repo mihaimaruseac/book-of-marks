@@ -93,6 +93,12 @@ jobs:
           which stack || true
           stack --version || true
 
+      - name: Configure
+        run: |
+          cat cabal.project.local || true
+          cabal help configure || true
+          cabal help build || true
+
       - name: Build code
         run: cabal build
 
