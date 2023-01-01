@@ -57,4 +57,4 @@ data Bookmark = Bookmark
 --
 inc :: Num a => a -- ^ value to increment
              -> a -- ^ result
-inc x = x + 1
+inc x = x + 2
