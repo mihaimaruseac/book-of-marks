@@ -50,22 +50,6 @@ jobs:
           find . -type f | sort | xargs sha256sum | tee > post_toolchain
           find ~/.cabal -type f | sort | xargs sha256sum | tee > post_toolchain_cabal
 
-      - name: List Haskell binaries (post)
-        run: |
-          echo 'Cabal: '
-          which cabal || true
-          cabal --version || true
-          echo 'GHC{,i}: '
-          which ghc ghci || true
-          ghc --version || true
-          ghci --version || true
-          echo 'GHCup: '
-          which ghcup || true
-          ghcup --version || true
-          echo 'Stack: '
-          which stack || true
-          stack --version || true
-
       - name: Configure
         run: |
           cat cabal.project.local || true
