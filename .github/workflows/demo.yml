@@ -44,7 +44,6 @@ jobs:
           stack --version || true
 
       - name: Setup Haskell Compiler (cabal)
-        id: setup-haskell-cabal
         uses: haskell/actions/setup@93635e8c4ac823f55cf3444537a63d3f2fd589de # v2.1.0
 
       - name: Cache dist-newstyle
@@ -98,6 +97,9 @@ jobs:
           cat cabal.project.local || true
           cabal help configure || true
           cabal help build || true
+
+      - name: Configure to run tests and benchmarks
+        run: cabal configure --enable-tests --enable-benchmarks
 
       - name: Build code
         run: cabal build
