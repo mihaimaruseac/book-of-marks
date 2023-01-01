@@ -34,8 +34,10 @@ jobs:
         uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         with:
           path: dist-newstyle
-          key: dist-newstyle-${{ hashFiles('src*') }}
-          restore-keys: dist-newstyle-
+          key: dist-newstyle-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('src*') }}
+          restore-keys: |
+            dist-newstyle-${{ hashFiles('**/*.cabal') }}
+            dist-newstyle-
 
       - name: Cache ~/.cabal/store
         uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
