@@ -19,14 +19,6 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Remove .git
-        run: rm -rf .git
-
-      - name: List everything (pre)
-        run: |
-          tree -alps .
-          tree -alps . | sha256sum
-
       - name: Setup Haskell Compiler (cabal)
         uses: haskell/actions/setup@93635e8c4ac823f55cf3444537a63d3f2fd589de # v2.1.0
 
@@ -46,36 +38,14 @@ jobs:
           key: cabal-store-${{ hashFiles('**/*.cabal') }}
           restore-keys: cabal-store-
 
-      - name: List everything (post toolchain and cache)
-        run: |
-          tree -alps . | sha256sum
-          find . -type f | sort | xargs sha256sum | tee > post_toolchain
-          find ~/.cabal -type f | sort | xargs sha256sum | tee > post_toolchain_cabal
-
       - name: Configure to run tests and benchmarks
         run: cabal configure --enable-tests --enable-benchmarks
 
       - name: Build code
         run: cabal build
 
-      - name: List everything (post build)
-        run: |
-          tree -alps . | sha256sum
-          find . -type f | sort | xargs sha256sum | tee > post_build
-          diff -u post_toolchain post_build || true
-          find ~/.cabal -type f | sort | xargs sha256sum | tee > post_build_cabal
-          diff -u post_toolchain_cabal post_build_cabal || true
-
       - name: Test code
         run: cabal test || true
 
       - name: Benchmark code
         run: cabal bench || true
-
-      - name: List everything (at end)
-        run: |
-          tree -alps . | sha256sum
-          find . -type f | sort | xargs sha256sum | tee > post_end
-          diff -u post_build post_end || true
-          find ~/.cabal -type f | sort | xargs sha256sum | tee > post_end_cabal
-          diff -u post_build_cabal post_end_cabal || true
