@@ -99,6 +99,9 @@ jobs:
           cabal help configure || true
           cabal help build || true
 
+      - name: Configure to run tests and benchmarks
+        run: cabal configure --enable-tests --enable-benchmarks
+
       - name: Build code
         run: cabal build
 
