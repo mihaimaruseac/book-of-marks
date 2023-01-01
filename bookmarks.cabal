@@ -73,5 +73,5 @@ benchmark bookmarks-benchmark
   hs-source-dirs:    src-benchmark
   main-is:           Main.hs
   build-depends:     base >= 4.8 && < 5
-                   , criterion >= 1.1
+                   , criterion == 1.5.13.0
                    , bookmarks
