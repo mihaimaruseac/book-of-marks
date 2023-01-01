@@ -45,7 +45,7 @@ jobs:
         run: cabal build
 
       - name: Test code
-        run: cabal test || true
+        run: cabal test || true  # TODO(mihaimaruseac): Fix this
 
       - name: Benchmark code
-        run: cabal bench || true
+        run: cabal bench || true  # TODO(mihaimaruseac): Fix this
