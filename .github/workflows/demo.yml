@@ -27,22 +27,6 @@ jobs:
           tree -alps .
           tree -alps . | sha256sum
 
-      - name: List Haskell binaries (pre)
-        run: |
-          echo 'Cabal: '
-          which cabal || true
-          cabal --version || true
-          echo 'GHC{,i}: '
-          which ghc ghci || true
-          ghc --version || true
-          ghci --version || true
-          echo 'GHCup: '
-          which ghcup || true
-          ghcup --version || true
-          echo 'Stack: '
-          which stack || true
-          stack --version || true
-
       - name: Setup Haskell Compiler (cabal)
         uses: haskell/actions/setup@93635e8c4ac823f55cf3444537a63d3f2fd589de # v2.1.0
 
@@ -52,17 +36,17 @@ jobs:
           path: dist-newstyle
           key: dist-newstyle
 
-      - name: Cache ~/.cabal/logs
-        uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
-        with:
-          path: ~/.cabal/logs
-          key: logs
+      # name: Cache ~/.cabal/logs
+      # uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
+      # with:
+      #   path: ~/.cabal/logs
+      #   key: logs
 
-      - name: Cache ~/.cabal/packages
-        uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
-        with:
-          path: ~/.cabal/packages
-          key: packages
+      # name: Cache ~/.cabal/packages
+      # uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
+      # with:
+      #   path: ~/.cabal/packages
+      #   key: packages
 
       - name: Cache ~/.cabal/store
         uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
@@ -115,21 +99,13 @@ jobs:
       - name: Test code
         run: cabal test || true
 
-      - name: List everything (post test)
-        run: |
-          tree -alps . | sha256sum
-          find . -type f | sort | xargs sha256sum | tee > post_test
-          diff -u post_build post_test || true
-          find ~/.cabal -type f | sort | xargs sha256sum | tee > post_test_cabal
-          diff -u post_build_cabal post_test_cabal || true
-
       - name: Benchmark code
         run: cabal bench || true
 
-      - name: List everything (post bench)
+      - name: List everything (at end)
         run: |
           tree -alps . | sha256sum
-          find . -type f | sort | xargs sha256sum | tee > post_bench
-          diff -u post_test post_bench || true
-          find ~/.cabal -type f | sort | xargs sha256sum | tee > post_bench_cabal
-          diff -u post_test_cabal post_bench_cabal || true
+          find . -type f | sort | xargs sha256sum | tee > post_end
+          diff -u post_build post_end || true
+          find ~/.cabal -type f | sort | xargs sha256sum | tee > post_end_cabal
+          diff -u post_build_cabal post_end_cabal || true
