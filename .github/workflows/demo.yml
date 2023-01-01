@@ -52,12 +52,6 @@ jobs:
           find . -type f | sort | xargs sha256sum | tee > post_toolchain
           find ~/.cabal -type f | sort | xargs sha256sum | tee > post_toolchain_cabal
 
-      - name: Configure
-        run: |
-          cat cabal.project.local || true
-          cabal help configure || true
-          cabal help build || true
-
       - name: Configure to run tests and benchmarks
         run: cabal configure --enable-tests --enable-benchmarks
 
