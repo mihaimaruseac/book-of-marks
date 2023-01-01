@@ -99,18 +99,10 @@ jobs:
       - name: Test code
         run: cabal test || true
 
-      - name: List everything (post test)
-        run: |
-          tree -alps . | sha256sum
-          find . -type f | sort | xargs sha256sum | tee > post_test
-          diff -u post_build post_test || true
-          find ~/.cabal -type f | sort | xargs sha256sum | tee > post_test_cabal
-          diff -u post_build_cabal post_test_cabal || true
-
       - name: Benchmark code
         run: cabal bench || true
 
-      - name: List everything (post bench)
+      - name: List everything (at end)
         run: |
           tree -alps . | sha256sum
           find . -type f | sort | xargs sha256sum | tee > post_bench
