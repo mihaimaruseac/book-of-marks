@@ -41,7 +41,7 @@ jobs:
           tree -alps .
 
       - name: Configure to run tests and benchmarks
-        run: stack --resolver=${{ matrix.resolver }} configure --enable-tests --enable-benchmarks
+        run: stack --resolver=${{ matrix.resolver }} help update #configure --enable-tests --enable-benchmarks
 
       - name: List everything (2)
         run: |
