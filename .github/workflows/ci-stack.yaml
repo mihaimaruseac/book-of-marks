@@ -36,6 +36,18 @@ jobs:
       - name: Echo some vars
         run: echo ${{ steps.setup-haskell.outputs.stack-root }}
 
+      - name: Cache .stack-work
+        uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
+        with:
+          path: stack-work
+          key: stack-work
+
+      - name: Cache ~/.stack
+        uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
+        with:
+          path: ${{ steps.setup-haskell.outputs.stack-root }}
+          key: stack-root
+
       - name: Get dependencies
         run: stack --resolver=${{ matrix.resolver }} build --only-dependencies --test --bench --no-run-tests --no-run-benchmarks
 
