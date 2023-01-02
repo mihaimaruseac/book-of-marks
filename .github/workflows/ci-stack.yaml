@@ -41,33 +41,33 @@ jobs:
 
       - name: List everything (2)
         run: |
-          tree -alps .stack-work
+          find .stack-work -type f | sort | xargs sha256sum | tee > sw_2
           echo "===="
-          tree -alps ${{ steps.setup-haskell.outputs.stack-root }}
+          find ${{ steps.setup-haskell.outputs.stack-root }} -type f | sort | xargs sha256sum | tee > sr_2
 
       - name: Build
         run: stack --resolver=${{ matrix.resolver }} build --test --bench --no-run-tests --no-run-benchmarks
 
       - name: List everything (3)
         run: |
-          tree -alps .stack-work
+          find .stack-work -type f | sort | xargs sha256sum | tee > sw_3
           echo "===="
-          tree -alps ${{ steps.setup-haskell.outputs.stack-root }}
+          find ${{ steps.setup-haskell.outputs.stack-root }} -type f | sort | xargs sha256sum | tee > sr_3
 
       - name: Test
         run: stack --resolver=${{ matrix.resolver }} test
 
       - name: List everything (4)
         run: |
-          tree -alps .stack-work
+          find .stack-work -type f | sort | xargs sha256sum | tee > sw_4
           echo "===="
-          tree -alps ${{ steps.setup-haskell.outputs.stack-root }}
+          find ${{ steps.setup-haskell.outputs.stack-root }} -type f | sort | xargs sha256sum | tee > sr_4
 
       - name: Bench
         run: stack --resolver=${{ matrix.resolver }} bench
 
       - name: List everything (5)
         run: |
-          tree -alps .stack-work
+          find .stack-work -type f | sort | xargs sha256sum | tee > sw_5
           echo "===="
-          tree -alps ${{ steps.setup-haskell.outputs.stack-root }}
+          find ${{ steps.setup-haskell.outputs.stack-root }} -type f | sort | xargs sha256sum | tee > sr_5
