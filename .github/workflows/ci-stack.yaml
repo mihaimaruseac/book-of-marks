@@ -39,17 +39,17 @@ jobs:
         uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         with:
           path: .stack-work
-          key: stack-work-${{ matrix.os }}-${{ hashFiles('stack.yaml', '**/*.cabal') }}-${{ hashFiles('src*') }}
+          key: stack-work-${{ matrix.os }}-${{ matrix.resolver }}-${{ hashFiles('stack.yaml', '**/*.cabal') }}-${{ hashFiles('src*') }}
           restore-keys: |
-            stack-work-${{ matrix.os }}-${{ hashFiles('stack.yaml', '**/*.cabal') }}-
-            stack-work-${{ matrix.os }}-
+            stack-work-${{ matrix.os }}-${{ matrix.resolver }}-${{ hashFiles('stack.yaml', '**/*.cabal') }}-
+            stack-work-${{ matrix.os }}-${{ matrix.resolver }}-
 
       - name: Cache ~/.stack
         uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         with:
           path: ${{ steps.setup-haskell.outputs.stack-root }}
-          key: stack-root-${{ matrix.os }}-${{ hashFiles('stack.yaml', '**/*.cabal') }}
-          restore-keys: stack-root-${{ matrix.os }}-
+          key: stack-root-${{ matrix.os }}-${{ matrix.resolver }}-${{ hashFiles('stack.yaml', '**/*.cabal') }}
+          restore-keys: stack-root-${{ matrix.os }}-${{ matrix.resolver }}-
 
       - name: Get dependencies
         run: stack build --resolver=${{ matrix.resolver }} --only-dependencies --test --bench --no-run-tests --no-run-benchmarks
