@@ -13,6 +13,10 @@ jobs:
   test:
     name: Test job
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # don't cancel other jobs if one fails
+      matrix:
+        resolver: ["nightly"]
     steps:
       - name: "Checkout code"
         uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
@@ -31,8 +35,8 @@ jobs:
           which stack || true
           stack --version || true
           echo 'GHC{,i}: '
-      #   stack exec -- ghc --version || true
-      #   stack exec -- ghci --version || true
+          stack --resolver=${{ matrix.resolver }} exec -- ghc --version || true
+          stack --resolver=${{ matrix.resolver }} exec -- ghci --version || true
 
       - name: Setup Haskell Compiler (stack)
         uses: haskell/actions/setup@93635e8c4ac823f55cf3444537a63d3f2fd589de # v2.1.0
@@ -50,5 +54,5 @@ jobs:
           which stack || true
           stack --version || true
           echo 'GHC{,i}: '
-          stack --resolver=nightly exec -- ghc --version || true
-          stack --resolver=nightly exec -- ghci --version || true
+          stack --resolver=${{ matrix.resolver }} exec -- ghc --version || true
+          stack --resolver=${{ matrix.resolver }} exec -- ghci --version || true
