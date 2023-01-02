@@ -51,7 +51,7 @@ jobs:
           restore-keys: stack-root-${{ matrix.os }}-
 
       - name: Get dependencies
-        run: stack build --only-dependencies --test --bench --no-run-tests --no-run-benchmarks
+        run: stack build --resolver=nightly --only-dependencies --test --bench --no-run-tests --no-run-benchmarks
 
       - name: Build code
         run: stack build --test --bench --no-run-tests --no-run-benchmarks
