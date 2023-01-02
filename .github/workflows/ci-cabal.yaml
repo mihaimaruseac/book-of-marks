@@ -12,7 +12,16 @@ permissions: {}
 jobs:
   test:
     name: Test job
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false # don't cancel other jobs if one fails
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        ghc: ["8.10.7", "9.2.5", "9.4.4"]
+    # Set default shell to bash since we're using a lot of bash constructs
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: "Checkout code"
         uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
@@ -20,23 +29,26 @@ jobs:
           persist-credentials: false
 
       - name: Setup Haskell Compiler (cabal)
+        id: setup-haskell
         uses: haskell/actions/setup@93635e8c4ac823f55cf3444537a63d3f2fd589de # v2.1.0
+        with:
+          ghc-version: ${{ matrix.ghc }}
 
       - name: Cache dist-newstyle
         uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         with:
           path: dist-newstyle
-          key: dist-newstyle-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('src*') }}
+          key: dist-newstyle-${{ matrix.os }}-${{ matrix.ghc }}-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('src*') }}
           restore-keys: |
-            dist-newstyle-${{ hashFiles('**/*.cabal') }}
-            dist-newstyle-
+            dist-newstyle-${{ matrix.os }}-${{ matrix.ghc }}-${{ hashFiles('**/*.cabal') }}-
+            dist-newstyle-${{ matrix.os }}-${{ matrix.ghc }}-
 
       - name: Cache ~/.cabal/store
         uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         with:
-          path: ~/.cabal/store
-          key: cabal-store-${{ hashFiles('**/*.cabal') }}
-          restore-keys: cabal-store-
+          path: ${{ steps.setup-haskell.outputs.cabal-store }}
+          key: cabal-store-${{ matrix.os }}-${{ matrix.ghc }}-${{ hashFiles('**/*.cabal') }}
+          restore-keys: cabal-store-${{ matrix.os }}-${{ matrix.ghc }}-
 
       - name: Configure to run tests and benchmarks
         run: cabal configure --enable-tests --enable-benchmarks
