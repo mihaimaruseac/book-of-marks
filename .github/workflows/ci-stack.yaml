@@ -57,7 +57,7 @@ jobs:
           find ${{ steps.setup-haskell.outputs.stack-root }} -type f | sort | xargs sha256sum > sr_2
           diff -u /dev/null sr_2 || true
 
-      - name: Build
+      - name: Build code
         run: stack --resolver=${{ matrix.resolver }} build --test --bench --no-run-tests --no-run-benchmarks
 
       - name: List everything (3)
@@ -68,7 +68,7 @@ jobs:
           echo "===="
           diff -u sr_2 sr_3 || true
 
-      - name: Test
+      - name: Test code
         run: stack --resolver=${{ matrix.resolver }} test
 
       - name: List everything (4)
@@ -79,7 +79,7 @@ jobs:
           echo "===="
           diff -u sr_3 sr_4 || true
 
-      - name: Bench
+      - name: Benchmark code
         run: stack --resolver=${{ matrix.resolver }} bench
 
       - name: List everything (5)
