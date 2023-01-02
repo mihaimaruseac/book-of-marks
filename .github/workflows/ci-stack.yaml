@@ -26,23 +26,23 @@ jobs:
       - name: Remove .git
         run: rm -rf .git
 
-      - name: List everything (pre)
-        run: tree -alps .
-
       - name: Setup Haskell Compiler (stack)
+        id: setup-haskell
         uses: haskell/actions/setup@93635e8c4ac823f55cf3444537a63d3f2fd589de # v2.1.0
         with:
           enable-stack: true
           stack-no-global: true
 
-      - name: List everything (post)
-        run: tree -alps .
+      - name: Echo some vars
+        run: echo ${{ steps.setup-haskell.outputs.stack-root }}
 
-      - name: List Haskell binaries (post)
+      - name: List everything (1)
         run: |
-          echo 'Stack: '
-          which stack || true
-          stack --version || true
-          echo 'GHC{,i}: '
-          stack --resolver=${{ matrix.resolver }} exec -- ghc --version || true
-          stack --resolver=${{ matrix.resolver }} exec -- ghci --version || true
+          tree -alps .
+
+      - name: Configure to run tests and benchmarks
+        run: stack --resolver=${{ matrix.resolver }} configure --enable-tests --enable-benchmarks
+
+      - name: List everything (2)
+        run: |
+          tree -alps .
