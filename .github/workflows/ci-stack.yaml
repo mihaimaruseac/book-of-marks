@@ -32,9 +32,6 @@ jobs:
           enable-stack: true
           stack-no-global: true
 
-      - name: Echo some vars
-        run: echo ${{ steps.setup-haskell.outputs.stack-root }}
-
       - name: Cache .stack-work
         uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         with:
