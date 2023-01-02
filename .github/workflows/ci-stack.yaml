@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false # don't cancel other jobs if one fails
       matrix:
-        resolver: ["nightly"]
+        resolver: ["lts18"]
     steps:
       - name: "Checkout code"
         uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
@@ -32,8 +32,10 @@ jobs:
       - name: Setup Haskell Compiler (stack)
         uses: haskell/actions/setup@93635e8c4ac823f55cf3444537a63d3f2fd589de # v2.1.0
         with:
+          ghc-version: "8.10.7"
           enable-stack: true
           stack-no-global: true
+          stack-setup-ghc: true
 
       - name: List everything (post)
         run: tree -alps .
