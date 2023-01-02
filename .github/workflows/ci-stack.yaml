@@ -62,7 +62,6 @@ jobs:
         run: |
           find .stack-work -type f | sort | xargs sha256sum > sw_2
           find ${{ steps.setup-haskell.outputs.stack-root }} -type f | sort | xargs sha256sum > sr_2
-          diff -u /dev/null sr_2 || true
 
       - name: Build code
         run: stack --resolver=${{ matrix.resolver }} build --test --bench --no-run-tests --no-run-benchmarks
