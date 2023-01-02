@@ -42,8 +42,8 @@ jobs:
           echo "===="
           tree -alps ${{ steps.setup-haskell.outputs.stack-root }}
 
-      - name: Configure to run tests and benchmarks
-        run: stack --resolver=${{ matrix.resolver }} update --help #configure --enable-tests --enable-benchmarks
+      - name: Get dependencies
+        run: stack --resolver=${{ matrix.resolver }} build --only-dependencies --test --bench --no-run-tests --no-run-benchmarks
 
       - name: List everything (2)
         run: |
