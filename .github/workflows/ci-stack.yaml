@@ -21,6 +21,7 @@ jobs:
         # whereas all others (including Cabal ones) barely reach 50MB. Instead,
         # we only use nightly as the resolver, as this should handle the newest
         # GHC and is also the place where failures will be reported from Stack.
+        resolver: ["nightly"]
     steps:
       - name: "Checkout code"
         uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
@@ -51,16 +52,16 @@ jobs:
           restore-keys: stack-root-${{ matrix.os }}-
 
       - name: Get dependencies
-        run: stack build --resolver=nightly --only-dependencies --test --bench --no-run-tests --no-run-benchmarks
+        run: stack build --resolver=${{ matrix.resolver }} --only-dependencies --test --bench --no-run-tests --no-run-benchmarks
 
       - name: Build code
-        run: stack build --test --bench --no-run-tests --no-run-benchmarks
+        run: stack build --resolver=${{ matrix.resolver }} --test --bench --no-run-tests --no-run-benchmarks
 
       - name: Test code
-        run: stack test
+        run: stack test --resolver=${{ matrix.resolver }}
 
       - name: Benchmark code
-        run: stack bench
+        run: stack bench --resolver=${{ matrix.resolver }}
 
       - name: Generate documentation
-        run: stack haddock
+        run: stack haddock --resolver=${{ matrix.resolver }}
