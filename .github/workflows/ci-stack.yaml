@@ -16,6 +16,7 @@ jobs:
     strategy:
       fail-fast: false # don't cancel other jobs if one fails
       matrix:
+        # TODO(mihaimaruseac): Only nightly, given cache size
         resolver: ["nightly"] #"lts-18", "lts-20", "nightly"]
     steps:
       - name: "Checkout code"
@@ -39,14 +40,20 @@ jobs:
       - name: Cache .stack-work
         uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         with:
-          path: ./.stack-work
-          key: stack-work
+          path: .stack-work
+          # TODO(mihaimaruseac): Group cabal and stack.yaml
+          # TODO(mihaimaruseac): package.yaml?
+          key: stack-work-${{ matrix.resolver }}-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('src*') }}
+          restore-keys: |
+            stack-work-${{ matrix.resolver }}-${{ hashFiles('**/*.cabal') }}-
+            stack-work-${{ matrix.resolver }}-
 
       - name: Cache ~/.stack
         uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3.2.2
         with:
           path: ${{ steps.setup-haskell.outputs.stack-root }}
-          key: stack-root
+          key: stack-root-${{ matrix.resolver }}-${{ hashFiles('**/*.cabal') }}
+          restore-keys: stack-root-${{ matrix.resolver }}-
 
       - name: Get dependencies
         run: stack --resolver=${{ matrix.resolver }} build --only-dependencies --test --bench --no-run-tests --no-run-benchmarks
