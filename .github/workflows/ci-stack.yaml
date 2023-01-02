@@ -50,5 +50,5 @@ jobs:
           which stack || true
           stack --version || true
           echo 'GHC{,i}: '
-          stack exec -- ghc --version || true
-          stack exec -- ghci --version || true
+          stack --resolver=nightly exec -- ghc --version || true
+          stack --resolver=nightly exec -- ghci --version || true
