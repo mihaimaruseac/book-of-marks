@@ -64,3 +64,6 @@ jobs:
 
       - name: Benchmark code
         run: stack --resolver=${{ matrix.resolver }} bench
+
+      - name: Generate documentation
+        run: stack --resolver=${{ matrix.resolver }} haddock
