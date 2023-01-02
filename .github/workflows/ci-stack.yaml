@@ -50,3 +50,30 @@ jobs:
           tree -alps .
           echo "===="
           tree -alps ${{ steps.setup-haskell.outputs.stack-root }}
+
+      - name: Build
+        run: stack --resolver=${{ matrix.resolver }} build --test --bench --no-run-tests --no-run-benchmarks
+
+      - name: List everything (3)
+        run: |
+          tree -alps .
+          echo "===="
+          tree -alps ${{ steps.setup-haskell.outputs.stack-root }}
+
+      - name: Test
+        run: stack --resolver=${{ matrix.resolver }} test
+
+      - name: List everything (4)
+        run: |
+          tree -alps .
+          echo "===="
+          tree -alps ${{ steps.setup-haskell.outputs.stack-root }}
+
+      - name: Bench
+        run: stack --resolver=${{ matrix.resolver }} bench
+
+      - name: List everything (5)
+        run: |
+          tree -alps .
+          echo "===="
+          tree -alps ${{ steps.setup-haskell.outputs.stack-root }}
