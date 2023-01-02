@@ -34,7 +34,6 @@ jobs:
         with:
           enable-stack: true
           stack-no-global: true
-          stack-setup-ghc: true
 
       - name: List everything (post)
         run: tree -alps .
