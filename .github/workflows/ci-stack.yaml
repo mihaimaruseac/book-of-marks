@@ -31,8 +31,8 @@ jobs:
           which stack || true
           stack --version || true
           echo 'GHC{,i}: '
-          stack exec -- ghc --version || true
-          stack exec -- ghci --version || true
+      #   stack exec -- ghc --version || true
+      #   stack exec -- ghci --version || true
 
       - name: Setup Haskell Compiler (stack)
         uses: haskell/actions/setup@93635e8c4ac823f55cf3444537a63d3f2fd589de # v2.1.0
