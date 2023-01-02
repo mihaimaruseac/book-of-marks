@@ -36,16 +36,12 @@ jobs:
       - name: Echo some vars
         run: echo ${{ steps.setup-haskell.outputs.stack-root }}
 
-      - name: List everything (1)
-        run: |
-          tree -alps .
-
       - name: Get dependencies
         run: stack --resolver=${{ matrix.resolver }} build --only-dependencies --test --bench --no-run-tests --no-run-benchmarks
 
       - name: List everything (2)
         run: |
-          tree -alps .
+          tree -alps .stack-work
           echo "===="
           tree -alps ${{ steps.setup-haskell.outputs.stack-root }}
 
@@ -54,7 +50,7 @@ jobs:
 
       - name: List everything (3)
         run: |
-          tree -alps .
+          tree -alps .stack-work
           echo "===="
           tree -alps ${{ steps.setup-haskell.outputs.stack-root }}
 
@@ -63,7 +59,7 @@ jobs:
 
       - name: List everything (4)
         run: |
-          tree -alps .
+          tree -alps .stack-work
           echo "===="
           tree -alps ${{ steps.setup-haskell.outputs.stack-root }}
 
@@ -72,6 +68,6 @@ jobs:
 
       - name: List everything (5)
         run: |
-          tree -alps .
+          tree -alps .stack-work
           echo "===="
           tree -alps ${{ steps.setup-haskell.outputs.stack-root }}
