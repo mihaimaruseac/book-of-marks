@@ -41,16 +41,16 @@ jobs:
 
       - name: List everything (2)
         run: |
-          find .stack-work -type f | sort | xargs sha256sum | tee > sw_2
-          find ${{ steps.setup-haskell.outputs.stack-root }} -type f | sort | xargs sha256sum | tee > sr_2
+          find .stack-work -type f | sort | xargs sha256sum > sw_2
+          find ${{ steps.setup-haskell.outputs.stack-root }} -type f | sort | xargs sha256sum > sr_2
 
       - name: Build
         run: stack --resolver=${{ matrix.resolver }} build --test --bench --no-run-tests --no-run-benchmarks
 
       - name: List everything (3)
         run: |
-          find .stack-work -type f | sort | xargs sha256sum | tee > sw_3
-          find ${{ steps.setup-haskell.outputs.stack-root }} -type f | sort | xargs sha256sum | tee > sr_3
+          find .stack-work -type f | sort | xargs sha256sum > sw_3
+          find ${{ steps.setup-haskell.outputs.stack-root }} -type f | sort | xargs sha256sum > sr_3
           diff -u sw_2 sw_3 || true
           echo "===="
           diff -u sr_2 sr_3 || true
@@ -60,8 +60,8 @@ jobs:
 
       - name: List everything (4)
         run: |
-          find .stack-work -type f | sort | xargs sha256sum | tee > sw_4
-          find ${{ steps.setup-haskell.outputs.stack-root }} -type f | sort | xargs sha256sum | tee > sr_4
+          find .stack-work -type f | sort | xargs sha256sum > sw_4
+          find ${{ steps.setup-haskell.outputs.stack-root }} -type f | sort | xargs sha256sum > sr_4
           diff -u sw_3 sw_4 || true
           echo "===="
           diff -u sr_3 sr_4 || true
@@ -71,8 +71,8 @@ jobs:
 
       - name: List everything (5)
         run: |
-          find .stack-work -type f | sort | xargs sha256sum | tee > sw_5
-          find ${{ steps.setup-haskell.outputs.stack-root }} -type f | sort | xargs sha256sum | tee > sr_5
+          find .stack-work -type f | sort | xargs sha256sum > sw_5
+          find ${{ steps.setup-haskell.outputs.stack-root }} -type f | sort | xargs sha256sum > sr_5
           diff -u sw_4 sw_5 || true
           echo "===="
           diff -u sr_4 sr_5 || true
