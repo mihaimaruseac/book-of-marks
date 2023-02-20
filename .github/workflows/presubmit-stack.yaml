@@ -55,13 +55,13 @@ jobs:
         run: stack build --resolver=${{ matrix.resolver }} --only-dependencies --test --bench --no-run-tests --no-run-benchmarks
 
       - name: Build code
-        run: stack build --resolver=${{ matrix.resolver }} --test --bench --no-run-tests --no-run-benchmarks
+        run: stack build --resolver=${{ matrix.resolver }} --test --enable-benchmarks --no-run-tests --no-run-benchmarks
 
       - name: Test code
         run: stack test --resolver=${{ matrix.resolver }}
 
       - name: Benchmark code
-        run: stack bench --resolver=${{ matrix.resolver }} --bench
+        run: stack bench --resolver=${{ matrix.resolver }}
 
       - name: Generate documentation
         run: stack haddock --resolver=${{ matrix.resolver }}
