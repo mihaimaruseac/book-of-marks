@@ -1,4 +1,4 @@
-name: Haskell CI with Stack
+name: Haskell Stack
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions: {}
 
 jobs:
   test:
-    name: Test job
+    name: CI
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false # don't cancel other jobs if one fails
@@ -61,7 +61,7 @@ jobs:
         run: stack test --resolver=${{ matrix.resolver }}
 
       - name: Benchmark code
-        run: stack bench --resolver=${{ matrix.resolver }}
+        run: stack bench --resolver=${{ matrix.resolver }} || true # TODO(mihaimaruseac): Disabled because it does not play properly with the caching
 
       - name: Generate documentation
         run: stack haddock --resolver=${{ matrix.resolver }}

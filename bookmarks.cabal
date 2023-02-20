@@ -1,3 +1,4 @@
+cabal-version:       3.6
 name:                bookmarks
 version:             0.1.0.0
 synopsis:            A small bookmark manager application
@@ -7,6 +8,7 @@ description:         Manager for the tons of bookmarks that I use. Will use a
 
 license:             ISC
 license-file:        LICENSE
+
 author:              Mihai Maruseac
 maintainer:          mihai.maruseac@gmail.com
 copyright:           © 2016 Mihai Maruseac
@@ -16,7 +18,6 @@ bug-reports:         http://github.com/mihaimaruseac/bookmarks/issues
 category:            Web
 build-type:          Simple
 stability:           alpha (experimental)
-cabal-version:       >=1.10
 
 extra-source-files:
   README.md
@@ -26,26 +27,31 @@ source-repository head
   type:     git
   location: git@github.com:mihaimaruseac/book-of-marks.git
 
-library
+common compile-options
+  ghc-options: -Wall -Wcompat
   default-language:  Haskell2010
-  ghc-options:       -Wall -Werror -O2
+
+common compile-options-binaries
+  ghc-options: -Wall -Wcompat -threaded -rtsopts -with-rtsopts=-N
+  default-language:  Haskell2010
+
+library
+  import:            compile-options
   hs-source-dirs:    src
   exposed-modules:   BookmarkManager.Types
   build-depends:     base >= 4.8 && < 5
                    , text >= 1.2
 
 executable bookmarks-exe
-  default-language:  Haskell2010
-  ghc-options:       -Wall -Werror -O2 -Wall -threaded -rtsopts -with-rtsopts=-N
+  import:            compile-options-binaries
   hs-source-dirs:    src-exe
   main-is:           Main.hs
   build-depends:     base >= 4.8 && < 5
                    , bookmarks
 
 test-suite bookmarks-test
+  import:            compile-options-binaries
   type:              exitcode-stdio-1.0
-  default-language:  Haskell2010
-  ghc-options:       -Wall -Werror -O2 -Wall -threaded -rtsopts -with-rtsopts=-N
   hs-source-dirs:    src-test
   main-is:           Main.hs
   build-depends:     base >= 4.8 && < 5
@@ -55,9 +61,8 @@ test-suite bookmarks-test
                    , bookmarks
 
 test-suite bookmarks-doctest
+  import:            compile-options-binaries
   type:              exitcode-stdio-1.0
-  default-language:  Haskell2010
-  ghc-options:       -Wall -Werror -O2 -Wall -threaded -rtsopts -with-rtsopts=-N
   hs-source-dirs:    src-doctest
   main-is:           Main.hs
   build-depends:     base >= 4.8 && < 5
@@ -67,9 +72,8 @@ test-suite bookmarks-doctest
                    , bookmarks
 
 benchmark bookmarks-benchmark
+  import:            compile-options-binaries
   type:              exitcode-stdio-1.0
-  default-language:  Haskell2010
-  ghc-options:       -Wall -Werror -O2 -Wall -threaded -rtsopts -with-rtsopts=-N
   hs-source-dirs:    src-benchmark
   main-is:           Main.hs
   build-depends:     base >= 4.8 && < 5

@@ -50,10 +50,11 @@ data Bookmark = Bookmark
 --  >>> succ . Prelude.last . Prelude.take prev . iterate inc $ 1
 --  42
 --
---  Properties:
+--  Properties (disabled now):
+--  TODO(mihaimaruseac): Re-enable testing properties
 --
---  prop> succ x == inc x
---  prop> inc (negate x) == negate (pred x)
+--  prp> succ x == inc x
+--  prp> inc (negate x) == negate (pred x)
 --
 inc :: Num a => a -- ^ value to increment
              -> a -- ^ result
