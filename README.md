@@ -1,5 +1,4 @@
-bookmarks
-=========
+# bookmarks [![Haskell Cabal](https://github.com/mihaimaruseac/bookmarks/actions/workflows/presubmit-cabal.yaml/badge.svg)](https://github.com/mihaimaruseac/bookmarks/actions/workflows/presubmit-cabal.yaml) [![Haskell Stack](https://github.com/mihaimaruseac/bookmarks/actions/workflows/presubmit-stack.yaml/badge.svg)](https://github.com/mihaimaruseac/bookmarks/actions/workflows/presubmit-stack.yaml) [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/mihaimaruseac/bookmarks/badge)](https://api.securityscorecards.dev/projects/github.com/mihaimaruseac/bookmarks)
 
 Note: This is deprecated, I haven't managed to update it in thime, so there's
 no actual software here (at least for now).
