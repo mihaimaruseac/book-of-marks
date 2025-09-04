@@ -61,7 +61,7 @@ jobs:
         run: stack test --resolver=${{ matrix.resolver }}
 
       - name: Benchmark code
-        run: stack bench --resolver=${{ matrix.resolver }} || true # TODO(mihaimaruseac): Disabled because it does not play properly with the caching
+        run: stack bench --resolver=${{ matrix.resolver }}
 
       - name: Generate documentation
         run: stack haddock --resolver=${{ matrix.resolver }}
